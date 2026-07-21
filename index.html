@@ -1,1 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Portal</title>
 
+<style>
+/* ---------- Dark (default) ---------- */
+:root,
+[data-theme="dark"]{
+    --primary:#3563E9;
+    --primary-light:#6488FF;
+    --success:#22C55E;
+    --bg:#0B1220;
+    --card:rgba(255,255,255,.04);
+    --card-hover:rgba(255,255,255,.07);
+    --text:#F1F5F9;
+    --muted:#94A3B8;
+    --border:rgba(255,255,255,.08);
+    --chip:rgba(255,255,255,.04);
+    --glow1:rgba(53,99,233,.25);
+    --glow2:rgba(100,136,255,.18);
+}
+
+/* ---------- Light ---------- */
+[data-theme="light"]{
+    --primary:#3563E9;
+    --primary-light:#5B7CFF;
+    --success:#16A34A;
+    --bg:#F5F7FB;
+    --card:#FFFFFF;
+    --card-hover:#FFFFFF;
+    --text:#0F172A;
+    --muted:#64748B;
+    --border:#E5E7EB;
+    --chip:#F1F5F9;
+    --glow1:rgba(53,99,233,.12);
+    --glow2:rgba(100,136,255,.10);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+body{
+    font-family:"Segoe UI","Hiragino Sans","Meiryo",sans-serif;
+    color:var(--text);
+    line-height:1.6;
+    min-height:100vh;
+    background:
+        radial-gradient(900px 500px at 15% -10%, var(--glow1), transparent 60%),
+        radial-gradient(800px 500px at 95% 0%, var(--glow2), transparent 55%),
+        var(--bg);
+    transition:background .4s ease, color .4s ease;
+}
+
+.container{
+    max-width:1400px;
+    margin:0 auto;
+    padding:56px 24px;
+}
+
+/* ---------- Header ---------- */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-bottom:44px;
+}
+
+.brand{ display:flex; align-items:center; gap:16px; }
+
+.logo{
+    width:52px; height:52px;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-light));
+    display:grid; place-items:center;
+    font-size:24px; font-weight:800; color:#fff;
+    box-shadow:0 8px 24px rgba(53,99,233,.45);
+}
+
+.title h1{
+    font-size:26px;
+    font-weight:800;
+    letter-spacing:.5px;
+    background:linear-gradient(90deg,var(--text),var(--primary-light));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+.title p{ color:var(--muted); font-size:14px; margin-top:2px; }
+
+.summary{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+
+.badge{
+    backdrop-filter:blur(12px);
+    background:var(--card);
+    padding:10px 18px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    font-weight:600;
+    font-size:13px;
+    display:flex; align-items:center; gap:8px;
+}
+.badge .dot{ width:8px; height:8px; border-radius:50%; }
+.badge.primary{ color:var(--primary); }
+.badge.primary .dot{ background:var(--primary-light); }
+.badge.active{ color:var(--success); }
+.badge.active .dot{
+    background:var(--success);
+    box-shadow:0 0 0 4px rgba(34,197,94,.18);
+}
+
+/* ---------- Theme toggle ---------- */
+.theme-toggle{
+    width:44px; height:44px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:var(--card);
+    color:var(--text);
+    font-size:18px;
+    cursor:pointer;
+    display:grid; place-items:center;
+    transition:transform .2s, background .3s, border-color .2s;
+}
+.theme-toggle:hover{ transform:translateY(-2px); border-color:var(--primary-light); }
+
+/* ---------- Grid ---------- */
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+    gap:24px;
+}
+
+/* ---------- Card ---------- */
+.card{
+    position:relative;
+    background:var(--card);
+    backdrop-filter:blur(16px);
+    border-radius:20px;
+    border:1px solid var(--border);
+    padding:26px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s, background .3s;
+}
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0 0 auto 0;
+    height:3px;
+    background:linear-gradient(90deg,var(--primary),var(--primary-light));
+    opacity:.9;
+}
+.card:hover{
+    transform:translateY(-6px);
+    background:var(--card-hover);
+    box-shadow:0 22px 45px rgba(0,0,0,.2);
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:8px;
+}
+
+.product-name{ font-size:20px; font-weight:700; }
+
+.version{
+    background:rgba(53,99,233,.16);
+    color:var(--primary);
+    padding:5px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+    white-space:nowrap;
+    border:1px solid rgba(100,136,255,.25);
+}
+
+.category{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    background:var(--chip);
+    color:var(--muted);
+    font-size:12px;
+    padding:4px 10px;
+    border-radius:6px;
+    margin-bottom:14px;
+    width:fit-content;
+    border:1px solid var(--border);
+}
+
+.desc{ color:var(--muted); font-size:14px; margin-bottom:20px; flex:1; }
+
+.btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    text-decoration:none;
+    padding:13px;
+    border-radius:12px;
+    font-weight:600;
+    color:#fff;
+    background:linear-gradient(135deg,var(--primary),var(--primary-light));
+    box-shadow:0 8px 20px rgba(53,99,233,.35);
+    transition:transform .2s, box-shadow .2s;
+}
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 26px rgba(53,99,233,.5);
+}
+.btn .arrow{ transition:transform .2s; }
+.btn:hover .arrow{ transform:translateX(4px); }
+
+/* ---------- Archive ---------- */
+.archive{
+    border-top:1px solid var(--border);
+    margin-top:20px;
+    padding-top:16px;
+}
+.archive h4{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:12px;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+.archive-links{ display:flex; flex-wrap:wrap; gap:8px; }
+.archive-links a{
+    text-decoration:none;
+    color:var(--muted);
+    background:var(--chip);
+    border:1px solid var(--border);
+    padding:6px 12px;
+    border-radius:8px;
+    font-size:13px;
+    transition:.2s;
+}
+.archive-links a:hover{
+    border-color:var(--primary-light);
+    color:var(--primary);
+    background:rgba(53,99,233,.12);
+}
+
+.footer{
+    margin-top:48px;
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="brand">
+            <div class="logo">AP</div>
+            <div class="title">
+                <h1>APPLICATION PORTAL</h1>
+                <p>Webアプリケーション統合ポータル</p>
+            </div>
+        </div>
+        <div class="summary">
+            <span class="badge primary" id="count-badge"></span>
+            <span class="badge active" id="active-badge"></span>
+            <button class="theme-toggle" id="theme-toggle" title="テーマ切り替え">🌙</button>
+        </div>
+    </div>
+
+    <div class="product-grid" id="grid"></div>
+
+    <div class="footer">Application Portal</div>
+
+</div>
+
+<script>
+/* ==========================================================
+   プロダクト管理: ここに追記するだけでカードが増えます
+   ========================================================== */
+const products = [
+    {
+        name:"AREA DASHBOARD",
+        category:"Dashboard",
+        desc:"客観データによるエリア間比較",
+        latest:"Ver 2.1",
+        latestUrl:"https://obayashismartcity.github.io/AREA_Dashboard2.1/ver.2/",
+        archives:[
+            {ver:"Ver 1.0", url:"https://obayashismartcity.github.io/AREA_Dashboard2.1/ver.1/"}
+        ]
+    },
+    {
+        name:"DROPs分析 -感性の価値化-",
+        category:"Dashboard",
+        desc:"DROP投稿の分析用ダッシュボード",
+        latest:"Ver 2.0",
+        latestUrl:"https://obayashismartcity.github.io/Analytics_2/",
+        archives:[
+            {ver:"Ver 1.3", url:"https://obayashismartcity.github.io/DROP_Emotion/test3/"},
+            {ver:"Ver 1.2", url:"https://obayashismartcity.github.io/DROP_Emotion/test2/"},
+            {ver:"Ver 1.1", url:"https://obayashismartcity.github.io/DROP_Emotion/test1/"},
+            {ver:"Ver 1.0", url:"https://obayashismartcity.github.io/DROP_Emotion/"}
+        ]
+    },
+    {
+        name:"DROPs分析 -タグマトリクス-",
+        category:"Dashboard",
+        desc:"DROP常設版のアクセスログ分析",
+        latest:"Ver 1.0",
+        latestUrl:"https://obayashismartcity.github.io/DROP_Emotion/Matrix/matrix_act_wb.html",
+        archives:[
+            {ver:"Ver 1.0", url:"https://obayashismartcity.github.io/DROP_Emotion/Matrix/matrix_act_wb.html"},
+        ]
+    },
+    {
+        name:"Population DASHBOARD",
+        category:"Dashboard",
+        desc:"人口データ分析（富山用）",
+        latest:"Ver 1.0",
+        latestUrl:"https://obayashismartcity.github.io/Population_comparison/",
+        archives:[
+            {ver:"Ver 1.0", url:"https://obayashismartcity.github.io/Population_comparison/"}
+        ]
+    },
+    {
+        name:"Ikefes埋め込みマップ",
+        category:"Application",
+        desc:"Open House Osaka2026提供用埋め込みマップ",
+        latest:"Ver A-1",
+        latestUrl:"https://obayashisc.github.io/ikefes_map_A-1/",
+        archives:[
+            {ver:"Ver A-2", url:"https://obayashisc.github.io/ikefes_map_A-2/"},
+            {ver:"Ver 1.0", url:"https://obayashismartcity.github.io/Ikefes_map/index2.html"}
+        ]
+    }
+];
+
+/* ---------- 描画 ---------- */
+const grid = document.getElementById("grid");
+
+products.forEach(p => {
+    const archiveLinks = p.archives
+        .map(a => `<a href="${a.url}">${a.ver}</a>`)
+        .join("");
+
+    grid.innerHTML += `
+        <div class="card">
+            <div class="card-header">
+                <div class="product-name">${p.name}</div>
+                <div class="version">${p.latest}</div>
+            </div>
+            <span class="category">${p.category}</span>
+            <p class="desc">${p.desc}</p>
+
+            <a class="btn" href="${p.latestUrl}">
+                最新版を開く <span class="arrow">→</span>
+            </a>
+
+            <div class="archive">
+                <h4>過去バージョン</h4>
+                <div class="archive-links">${archiveLinks}</div>
+            </div>
+        </div>
+    `;
+});
+
+/* ---------- サマリー ---------- */
+document.getElementById("count-badge").innerHTML =
+    `<span class="dot"></span>${products.length} PRODUCTS`;
+document.getElementById("active-badge").innerHTML =
+    `<span class="dot"></span>${products.length} ACTIVE`;
+
+/* ---------- テーマ切り替え ---------- */
+const html = document.documentElement;
+const toggle = document.getElementById("theme-toggle");
+
+// localStorage は環境により使えないことがあるため保護
+function loadTheme(){
+    try { return localStorage.getItem("theme"); } catch(e){ return null; }
+}
+function saveTheme(theme){
+    try { localStorage.setItem("theme", theme); } catch(e){}
+}
+
+function setTheme(theme){
+    html.setAttribute("data-theme", theme);
+    toggle.textContent = theme === "dark" ? "🌙" : "☀️";
+}
+
+// 保存済みテーマを復元（初期値はダーク）
+setTheme(loadTheme() || "dark");
+
+toggle.addEventListener("click", () => {
+    const next = html.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    setTheme(next);
+    saveTheme(next);
+});
+</script>
+
+</body>
+</html>
