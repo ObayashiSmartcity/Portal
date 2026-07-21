@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Application Portal</title>
-
 <style>
 /* ---------- Dark (default) ---------- */
 :root,
@@ -69,15 +68,38 @@ body{
     margin-bottom:44px;
 }
 
-.brand{ display:flex; align-items:center; gap:16px; }
+.brand{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
 
+/* ---------- Obayashi Logo ---------- */
 .logo{
-    width:52px; height:52px;
-    border-radius:14px;
-    background:linear-gradient(135deg,var(--primary),var(--primary-light));
-    display:grid; place-items:center;
-    font-size:24px; font-weight:800; color:#fff;
-    box-shadow:0 8px 24px rgba(53,99,233,.45);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+}
+
+.logo img{
+    height:52px;
+    width:auto;
+    display:block;
+}
+
+/* Light theme logo */
+.logo-dark{
+    display:none;
+}
+
+/* Dark theme logo */
+[data-theme="dark"] .logo-light{
+    display:none;
+}
+
+[data-theme="dark"] .logo-dark{
+    display:block;
 }
 
 .title h1{
@@ -89,9 +111,19 @@ body{
     background-clip:text;
     color:transparent;
 }
-.title p{ color:var(--muted); font-size:14px; margin-top:2px; }
 
-.summary{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+.title p{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:2px;
+}
+
+.summary{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:center;
+}
 
 .badge{
     backdrop-filter:blur(12px);
@@ -101,12 +133,29 @@ body{
     border:1px solid var(--border);
     font-weight:600;
     font-size:13px;
-    display:flex; align-items:center; gap:8px;
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
-.badge .dot{ width:8px; height:8px; border-radius:50%; }
-.badge.primary{ color:var(--primary); }
-.badge.primary .dot{ background:var(--primary-light); }
-.badge.active{ color:var(--success); }
+
+.badge .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+}
+
+.badge.primary{
+    color:var(--primary);
+}
+
+.badge.primary .dot{
+    background:var(--primary-light);
+}
+
+.badge.active{
+    color:var(--success);
+}
+
 .badge.active .dot{
     background:var(--success);
     box-shadow:0 0 0 4px rgba(34,197,94,.18);
@@ -114,17 +163,23 @@ body{
 
 /* ---------- Theme toggle ---------- */
 .theme-toggle{
-    width:44px; height:44px;
+    width:44px;
+    height:44px;
     border-radius:12px;
     border:1px solid var(--border);
     background:var(--card);
     color:var(--text);
     font-size:18px;
     cursor:pointer;
-    display:grid; place-items:center;
+    display:grid;
+    place-items:center;
     transition:transform .2s, background .3s, border-color .2s;
 }
-.theme-toggle:hover{ transform:translateY(-2px); border-color:var(--primary-light); }
+
+.theme-toggle:hover{
+    transform:translateY(-2px);
+    border-color:var(--primary-light);
+}
 
 /* ---------- Grid ---------- */
 .product-grid{
@@ -146,6 +201,7 @@ body{
     overflow:hidden;
     transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s, background .3s;
 }
+
 .card::before{
     content:"";
     position:absolute;
@@ -154,6 +210,7 @@ body{
     background:linear-gradient(90deg,var(--primary),var(--primary-light));
     opacity:.9;
 }
+
 .card:hover{
     transform:translateY(-6px);
     background:var(--card-hover);
@@ -168,7 +225,10 @@ body{
     margin-bottom:8px;
 }
 
-.product-name{ font-size:20px; font-weight:700; }
+.product-name{
+    font-size:20px;
+    font-weight:700;
+}
 
 .version{
     background:rgba(53,99,233,.16);
@@ -195,7 +255,12 @@ body{
     border:1px solid var(--border);
 }
 
-.desc{ color:var(--muted); font-size:14px; margin-bottom:20px; flex:1; }
+.desc{
+    color:var(--muted);
+    font-size:14px;
+    margin-bottom:20px;
+    flex:1;
+}
 
 .btn{
     display:flex;
@@ -211,12 +276,19 @@ body{
     box-shadow:0 8px 20px rgba(53,99,233,.35);
     transition:transform .2s, box-shadow .2s;
 }
+
 .btn:hover{
     transform:translateY(-2px);
     box-shadow:0 12px 26px rgba(53,99,233,.5);
 }
-.btn .arrow{ transition:transform .2s; }
-.btn:hover .arrow{ transform:translateX(4px); }
+
+.btn .arrow{
+    transition:transform .2s;
+}
+
+.btn:hover .arrow{
+    transform:translateX(4px);
+}
 
 /* ---------- Archive ---------- */
 .archive{
@@ -224,6 +296,7 @@ body{
     margin-top:20px;
     padding-top:16px;
 }
+
 .archive h4{
     font-size:12px;
     color:var(--muted);
@@ -232,7 +305,13 @@ body{
     text-transform:uppercase;
     letter-spacing:1px;
 }
-.archive-links{ display:flex; flex-wrap:wrap; gap:8px; }
+
+.archive-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
 .archive-links a{
     text-decoration:none;
     color:var(--muted);
@@ -243,6 +322,7 @@ body{
     font-size:13px;
     transition:.2s;
 }
+
 .archive-links a:hover{
     border-color:var(--primary-light);
     color:var(--primary);
@@ -259,17 +339,19 @@ body{
 </head>
 
 <body>
-
 <div class="container">
-
     <div class="header">
         <div class="brand">
-            <div class="logo">AP</div>
+            <div class="logo">
+                04_obayashi_o.png
+                04_obayashi_c.png
+            </div>
             <div class="title">
                 <h1>APPLICATION PORTAL</h1>
                 <p>Webアプリケーション統合ポータル</p>
             </div>
         </div>
+
         <div class="summary">
             <span class="badge primary" id="count-badge"></span>
             <span class="badge active" id="active-badge"></span>
@@ -280,7 +362,6 @@ body{
     <div class="product-grid" id="grid"></div>
 
     <div class="footer">Application Portal</div>
-
 </div>
 
 <script>
@@ -318,7 +399,7 @@ const products = [
         latest:"Ver 1.0",
         latestUrl:"https://obayashismartcity.github.io/DROP_Emotion/Matrix/matrix_act_wb.html",
         archives:[
-            {ver:"Ver 1.0", url:"https://obayashismartcity.github.io/DROP_Emotion/Matrix/matrix_act_wb.html"},
+            {ver:"Ver 1.0", url:"https://obayashismartcity.github.io/DROP_Emotion/Matrix/matrix_act_wb.html"}
         ]
     },
     {
@@ -349,7 +430,7 @@ const grid = document.getElementById("grid");
 
 products.forEach(p => {
     const archiveLinks = p.archives
-        .map(a => `<a href="${a.url}">${a.ver}</a>`)
+        .map(a => `${a.url}${a.ver}</a>`)
         .join("");
 
     grid.innerHTML += `
@@ -360,11 +441,9 @@ products.forEach(p => {
             </div>
             <span class="category">${p.category}</span>
             <p class="desc">${p.desc}</p>
-
-            <a class="btn" href="${p.latestUrl}">
+            ${p.latestUrl}
                 最新版を開く <span class="arrow">→</span>
             </a>
-
             <div class="archive">
                 <h4>過去バージョン</h4>
                 <div class="archive-links">${archiveLinks}</div>
@@ -376,6 +455,7 @@ products.forEach(p => {
 /* ---------- サマリー ---------- */
 document.getElementById("count-badge").innerHTML =
     `<span class="dot"></span>${products.length} PRODUCTS`;
+
 document.getElementById("active-badge").innerHTML =
     `<span class="dot"></span>${products.length} ACTIVE`;
 
@@ -385,10 +465,17 @@ const toggle = document.getElementById("theme-toggle");
 
 // localStorage は環境により使えないことがあるため保護
 function loadTheme(){
-    try { return localStorage.getItem("theme"); } catch(e){ return null; }
+    try {
+        return localStorage.getItem("theme");
+    } catch(e){
+        return null;
+    }
 }
+
 function saveTheme(theme){
-    try { localStorage.setItem("theme", theme); } catch(e){}
+    try {
+        localStorage.setItem("theme", theme);
+    } catch(e){}
 }
 
 function setTheme(theme){
@@ -405,6 +492,5 @@ toggle.addEventListener("click", () => {
     saveTheme(next);
 });
 </script>
-
 </body>
 </html>
