@@ -88,7 +88,7 @@ body{
     display:block;
 }
 
-/* Light theme logo */
+/* Light theme logo (default: light表示 / dark非表示) */
 .logo-dark{
     display:none;
 }
@@ -343,8 +343,8 @@ body{
     <div class="header">
         <div class="brand">
             <div class="logo">
-                04_obayashi_o.png
-                04_obayashi_c.png
+                <img class="logo-light" src="04_obayashi_o.png" alt="OBAYASHI">
+                <img class="logo-dark" src="04_obayashi_c.png" alt="OBAYASHI">
             </div>
             <div class="title">
                 <h1>APPLICATION PORTAL</h1>
@@ -430,7 +430,7 @@ const grid = document.getElementById("grid");
 
 products.forEach(p => {
     const archiveLinks = p.archives
-        .map(a => `${a.url}${a.ver}</a>`)
+        .map(a => `<a href="${a.url}">${a.ver}</a>`)
         .join("");
 
     grid.innerHTML += `
@@ -441,7 +441,7 @@ products.forEach(p => {
             </div>
             <span class="category">${p.category}</span>
             <p class="desc">${p.desc}</p>
-            ${p.latestUrl}
+            <a class="btn" href="${p.latestUrl}">
                 最新版を開く <span class="arrow">→</span>
             </a>
             <div class="archive">
